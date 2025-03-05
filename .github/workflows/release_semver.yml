@@ -34,13 +34,18 @@ jobs:
           cat version.txt
           
           URL=$(gh release create "${{github.ref_name}}" --generate-notes --verify-tag --latest)          
+
           gh release upload ${{github.ref_name}} version.txt
 
+
+
+          echo '**`version.txt`**                      >> $GITHUB_STEP_SUMMARY
           cat version.txt                              >> $GITHUB_STEP_SUMMARY
           echo                                         >> $GITHUB_STEP_SUMMARY
-          echo "[See the release ${{github.ref_name}}on GitHub]($URL)" >> $GITHUB_STEP_SUMMARY
-          
-
+          echo '```'                                   >> $GITHUB_STEP_SUMMARY 
+          echo "[See the release ${{github.ref_name}} on GitHub]($URL)" >> $GITHUB_STEP_SUMMARY
+          echo '```'                                   >> $GITHUB_STEP_SUMMARY 
+          echo                                         >> $GITHUB_STEP_SUMMARY
           echo 'Use `gh` CLI to download the release'  >> $GITHUB_STEP_SUMMARY 
           echo '```shell'                              >> $GITHUB_STEP_SUMMARY 
           echo "gh release download ${{github.ref_name}} -p 'version.txt' && gh release download ${{github.ref_name}} --archive tar.gz" >> $GITHUB_STEP_SUMMARY
