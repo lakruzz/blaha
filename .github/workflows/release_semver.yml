@@ -37,7 +37,7 @@ jobs:
           gh release upload ${{github.ref_name}} version.txt
 
           cat version.txt                              >> $GITHUB_STEP_SUMMARY
-          echo.                                        >> $GITHUB_STEP_SUMMARY
+          echo                                         >> $GITHUB_STEP_SUMMARY
           echo "[See the release ${{github.ref_name}}on GitHub]($URL)" >> $GITHUB_STEP_SUMMARY
           
 
