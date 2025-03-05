@@ -47,6 +47,7 @@ jobs:
           echo '```shell'                                                  >> $GITHUB_STEP_SUMMARY 
           echo "gh release download ${{github.ref_name}} -p 'version.txt' --repo ${{github.repository}}" >> $GITHUB_STEP_SUMMARY
           echo "gh release download ${{github.ref_name}} --archive tar.gz --repo ${{github.repository}}" >> $GITHUB_STEP_SUMMARY
+          echo "gh release download ${{github.ref_name}} --archive zip.   --repo ${{github.repository}}" >> $GITHUB_STEP_SUMMARY
           echo '```'                                                       >> $GITHUB_STEP_SUMMARY 
 
         else
