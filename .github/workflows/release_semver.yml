@@ -41,7 +41,7 @@ jobs:
           cat version.txt                                                  >> $GITHUB_STEP_SUMMARY
           echo '```'                                                       >> $GITHUB_STEP_SUMMARY 
           echo                                                             >> $GITHUB_STEP_SUMMARY
-          echo "[See the release \`${{github.ref_name}}\` on GitHub]($URL)">> $GITHUB_STEP_SUMMARY
+          echo "[See the release '${{github.ref_name}}'' on GitHub]($URL)" >> $GITHUB_STEP_SUMMARY
           echo                                                             >> $GITHUB_STEP_SUMMARY
           echo 'Use `gh` CLI to download the release:'                      >> $GITHUB_STEP_SUMMARY 
           echo '```shell'                                                  >> $GITHUB_STEP_SUMMARY 
