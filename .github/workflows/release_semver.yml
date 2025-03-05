@@ -24,6 +24,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        set -x
         if git branch --contains "${{github.ref_name}}" main | grep -q "main"; then
           
           echo "Release:     ${{github.ref_name}}" >  version.txt
@@ -32,12 +33,12 @@ jobs:
 
           cat version.txt
           
-          gh release create "$SEMVER_TAG" --generate-notes --verify-tag --latest
-          gh release upload $SEMVER_TAG version.txt
+          gh release create "${{github.ref_name}}" --generate-notes --verify-tag --latest
+          gh release upload ${{github.ref_name}} version.txt
 
         else
 
-          echo "Tag $SEMVER_TAG is not on main, skipping release creation."
+          echo "Tag ${{github.ref_name}} is not on main, skipping release creation."
           exit 1
 
         fi
