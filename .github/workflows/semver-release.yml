@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+  packages: write
+  deployments: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: main
+
+    - name: Create GitHub Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+        set +e
+        SEMVER_TAG="${GITHUB_REF#refs/tags/}"
+
+        git tag
+        git branch
+
+        if git branch --contains "${{github.ref_name}}" main | grep -q "main"; then
+          
+          echo "Release:     ${{github.ref_name}}" >  version.txt
+          echo "GitHub repo: ${{github.repository}}">> version.txt
+          echo "SHA1:        ${{github.sha}}" >> version.txt
+
+          cat version.txt
+          
+          gh release create "$SEMVER_TAG" --generate-notes --verify-tag --latest
+          gh release upload $SEMVER_TAG version.txt
+        else
+          echo "Tag $SEMVER_TAG is not on main, skipping release creation."
+          exit 1
+        fi
